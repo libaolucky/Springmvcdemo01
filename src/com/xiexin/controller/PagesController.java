@@ -30,4 +30,10 @@ public class PagesController {
     public String loginForm(){
         return "loginForm";
     }
+
+    @RequestMapping("/ajaxCommit")   // ajax收参数的
+    public String ajaxCommit(){
+        return "ajaxCommit";
+    }
+
 }

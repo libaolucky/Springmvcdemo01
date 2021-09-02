@@ -1,11 +1,14 @@
 package com.xiexin.controller;
 
 import com.xiexin.bean.AdminInfo;
+import com.xiexin.bean.Dog;
+import com.xiexin.bean.Lover;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -80,4 +83,95 @@ public class AdminController {
 
 
     }
+    
+    //ajax 接收 数组/集合
+    @RequestMapping("/ajax03")
+     @ResponseBody
+    public Map ajax03(@RequestParam("ids[]") List<Integer> ids){ //前端 ids[]  后台是 ids
+                        //当前后端的参数 不一样的时候，那么久需要使用注解调整
+        for (Integer id : ids) {
+            System.out.println("id = " + id);
+        }
+        Map codemap=new HashMap();
+        codemap.put("code",0);
+        codemap.put("msg","请求访问成功！");
+        codemap.put("data",ids);
+        return codemap;
+    }
+
+    // ajax 接收 JOSN对象
+    @RequestMapping("/ajax04")
+    @ResponseBody
+    public Map ajax04(@RequestBody AdminInfo adminInfo){  //@RequestBody 注解指的是前端用的JSON请求
+        System.out.println("adminInfo = " + adminInfo);
+        Map codemap=new HashMap();
+        codemap.put("code",0);
+        codemap.put("msg","请求访问成功！");
+        codemap.put("data",adminInfo);
+        return codemap;
+
+    }
+
+    // ajax 05 接收前端传过来的多个对象
+    @RequestMapping("/ajax05")
+    @ResponseBody
+    public Map ajax05(@ModelAttribute Lover lover, @ModelAttribute Dog dog){
+        System.out.println("lover = " + lover);
+        System.out.println("dog = " + dog);
+
+        Map codemap=new HashMap();
+        codemap.put("code",0);
+        codemap.put("msg","请求访问成功！");
+        codemap.put("data1",lover);
+        codemap.put("data2",dog);
+        return codemap;
+    }
+
+    //前端传过来多个 对象 需要根据 请求的前缀 进行绑定
+    @InitBinder("lover")
+    public void binding01(WebDataBinder webDataBinder){  //WebDataBinder 网络数据的绑定 也就是前端传过来的数据
+        webDataBinder.setFieldDefaultPrefix("lover.");  //设置前缀  lover.name :
+    }
+    @InitBinder("dog")
+    public void binding02(WebDataBinder webDataBinder){  //WebDataBinder 网络数据的绑定 也就是前端传过来的数据
+        webDataBinder.setFieldDefaultPrefix("dog.");
+    }
+
+    // ajax06 json 收取多个对象
+    @RequestMapping("/ajax06")
+    @ResponseBody    //@GEtMapping 和 @RequestBody 不可以 同时使用，拿不到参数
+    public Map ajax06(@RequestBody List<Lover> loverList){  //@RequestBody 他是从方法中拿取数据的，所以不能用GET请求
+        for (Lover lover : loverList) {
+            System.out.println("lover = " + lover);
+        }
+        Map codemap=new HashMap();
+        codemap.put("code",0);
+        codemap.put("msg","请求访问成功！");
+        codemap.put("data",loverList);
+        return codemap;
+    }
+
+    //ajax07 map
+    @RequestMapping("/ajax07")
+    @ResponseBody    //十分常用   servlet多表的 动态参数，就是用map   ajax07 能搞定一切！！
+    public Map ajax07(@RequestBody Map map){
+        System.out.println("map的adminName =" + map.get("adminName"));
+        Map codemap=new HashMap();
+        codemap.put("code",0);
+        codemap.put("msg","请求访问成功！");
+        codemap.put("data",map);
+        return codemap;
+    }
+
+    @RequestMapping("/ajax08")
+    @ResponseBody
+    public Map ajax08(Lover lover,@RequestParam(value = "limit",required = false,defaultValue="5") Integer pageSize,Integer page){
+        System.out.println("lover = " + lover);
+        System.out.println("pageSize = " + pageSize);
+        System.out.println("page = " + page);
+        return null;
+    }
+
+
+
 }
