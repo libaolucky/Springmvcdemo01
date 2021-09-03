@@ -38,7 +38,7 @@
             var adminInfo={};
             adminInfo.adminName='李四';
             adminInfo.adminPwd='12345';
-            adminInfo.adminTime="2019-09-08 23:09:29"
+            adminInfo.adminTime="2019-09-08 23:09:29";
             $.ajax({
                 url:"/api/admin/regByBean",
                 type:"POST",
@@ -67,6 +67,7 @@
                 }
             })
         })
+
         // ajax 传json对象
         $("#ajax04").click(function () {
             // json 对象 浏览器中看的请求带颜色的
@@ -98,7 +99,7 @@
                 url:'/api/admin/ajax04',
                 type:'POST',
                // data:adminInfo,   普通的 k-v 结构 请求方式是：Content-Type: application/x-www-form-urlencoded; charset=UTF-8
-                data:JSON.stringify(adminInfo),   //变成json对象后，就需要 Content-Type 更改为：
+                data:JSON.stringify(adminInfo),   //变成json对象后，就需要 Content-Type 更改为："application/json;charset=UTF-8",
                 contentType:"application/json;charset=UTF-8",
                 dataType:"JSON",
                 success:function (rs) {

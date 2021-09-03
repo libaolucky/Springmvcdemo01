@@ -36,4 +36,9 @@ public class PagesController {
         return "ajaxCommit";
     }
 
+    @RequestMapping("/home")  //查找home的jsp的
+    public String home(){
+        return "home";
+    }
+
 }

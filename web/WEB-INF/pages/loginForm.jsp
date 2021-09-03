@@ -8,9 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>登录页面</title>
+    <title>登录页</title>
 </head>
 <body>
-  欢迎登录成功！
+   <div>
+       <%--<form action="/api/admin/yuansheng" method="post">--%>
+       <form action="/api/admin/map" method="post">
+           用户名：<input type="text" name="adminName"> <br/>
+           密码：<input type="password" name="adminPwd"> <br/>
+           <input type="submit" value="登录">
+       </form>
+
+   </div>
 </body>
 </html>
